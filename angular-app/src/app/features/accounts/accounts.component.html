@@ -1,0 +1,15 @@
+
+<app-navbar [isAdmin]="isAdmin"></app-navbar>
+
+<div class="content">
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <app-custom-table
+    [displayedColumns]="displayedColumns"
+    [dataSource]="dataSource"
+    [shouldLoadItems]="false"
+    [selection]="selection">
+  </app-custom-table>
+</div>

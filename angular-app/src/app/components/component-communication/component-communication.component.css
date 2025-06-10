@@ -1,0 +1,28 @@
+h2 {
+  color: #007bff;
+  text-align: center;
+}
+
+h3 {
+  color: #28a745;
+}
+
+p {
+  font-size: 16px;
+  color: #495057;
+}
+
+.parent {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  margin-bottom: 20px;
+}
+
+.child {
+  border: 1px solid #007bff;
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #e9f7fe;
+}

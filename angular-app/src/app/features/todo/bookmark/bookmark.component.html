@@ -1,0 +1,18 @@
+<app-navbar [isAdmin]="isAdmin"></app-navbar>
+
+<div class="content">
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+
+<app-custom-table
+  [dataSource]="bookmarkedItems"
+  [displayedColumns]="displayedColumns"
+  [selection]="selection"
+  [isBookmarkedPage]="true"
+  (toggleBookmark)="handleToggleBookmark($event)"
+  (editItem)="onEdit($event)"
+  (deleteItem)="onDelete($event)"
+></app-custom-table>
+
+</div>

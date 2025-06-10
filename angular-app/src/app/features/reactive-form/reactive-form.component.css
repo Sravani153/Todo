@@ -1,0 +1,44 @@
+h2 {
+  color: #007bff;
+  text-align: center;
+}
+
+form {
+  max-width: 350px;
+  margin: auto;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input, button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #7bcc5e;
+}
+
+p {
+  color: #495057;
+  font-size: 14px;
+}

@@ -1,0 +1,51 @@
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+  <!-- Dynamic Columns -->
+<ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+    <ng-container *ngIf="column === 'select'">
+      <mat-checkbox
+        (change)="toggleAllSelection()"
+        [checked]="isAllSelected()"
+        [indeterminate]="selection.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </ng-container>
+    <ng-container *ngIf="column !== 'select'">
+      {{ getColumnTranslationKey(column) | translate }}
+    </ng-container>
+  </th>
+
+  <td mat-cell *matCellDef="let element">
+    <ng-container *ngIf="column === 'select'">
+      <mat-checkbox
+        (click)="$event.stopPropagation()"
+        (change)="selection.toggle(element)"
+        [checked]="selection.isSelected(element)">
+      </mat-checkbox>
+    </ng-container>
+    <ng-container *ngIf="column === 'bookmark'">
+      <mat-icon (click)="onToggleBookmark(element)" class="bookmark-icon">
+        {{ element.bookmark ? 'bookmark' : 'bookmark_border' }}
+      </mat-icon>
+    </ng-container>
+    <ng-container *ngIf="column === 'actions'">
+      <button mat-icon-button color="primary" (click)="onEdit(element.id)" class="edit-button">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="onDelete(element.id)" class="delete-button">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="column !== 'select' && column !== 'bookmark' && column !== 'actions'">
+      {{ element[column] }}
+    </ng-container>
+  </td>
+</ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>

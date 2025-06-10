@@ -1,0 +1,75 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 15;
+  padding: 0;
+  background-color: #f8f9fa;
+}
+
+nav {
+  background-color: #0e0d0e;
+  padding: 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  padding: 20px;
+}
+
+h2 {
+  color: #343a40;
+}
+
+h3 {
+  color: #6c757d;
+}
+
+p {
+  font-size: 14px;
+  color: #495057;
+}
+
+input, button {
+  display: block;
+  margin: 10px 0;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+label {
+  display: block;
+  margin: 10px 0;
+}
+
+input[type="text"], input[type="number"], input[type="date"], input[type="password"] {
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="button"] {
+  margin-left: 10px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

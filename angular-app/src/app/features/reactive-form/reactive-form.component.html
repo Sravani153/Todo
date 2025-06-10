@@ -1,0 +1,31 @@
+
+<h2>Simple Form Application</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label>
+    Name:
+    <input formControlName="name" type="text">
+  </label>
+  <br>
+  <label>
+    Age:
+    <input formControlName="age" type="number">
+  </label>
+  <br>
+  <label>
+    Date of Birth:
+    <input formControlName="dob" type="date">
+  </label>
+  <br>
+  <label>
+    Password:
+    <input formControlName="password" type="password">
+  </label>
+  <br>
+  <button type="submit">Submit</button>
+</form>
+
+
+Child component to display form data
+<app-reactive-form-display [formData]="formData"></app-reactive-form-display>
+

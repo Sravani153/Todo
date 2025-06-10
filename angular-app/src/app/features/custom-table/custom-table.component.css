@@ -1,0 +1,67 @@
+mat-form-field {
+  width: 100%;
+  max-width: 500px;
+}
+
+mat-icon[matSuffix] {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+mat-icon[matSuffix].mat-icon-button:hover {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+button[mat-icon-button] {
+  color: #3f51b5;
+  transition: color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.edit-button {
+  color: #3f51b5;
+}
+
+.edit-button:hover {
+  color: #4caf50;
+}
+
+.delete-button {
+  color: #3f51b5;
+}
+
+.delete-button:hover {
+  color: #f44336;
+}
+
+
+.table-container {
+  margin-top: 20px;
+  overflow: auto;
+}
+
+@media screen and (max-width: 600px) {
+  table.mat-elevation-z8 {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+.mat-checkbox {
+  padding: 0;
+}
+
+.mat-paginator {
+  margin-top: 16px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .table-controls {
+    flex-direction: column;
+  }
+  .table-controls button {
+    margin-bottom: 8px;
+  }
+}
+

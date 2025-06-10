@@ -1,0 +1,150 @@
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3f51b5;
+  color: #fff;
+  padding: 0 16px;
+}
+
+/* Language Selector */
+mat-select {
+  min-width: 150px; /* Decrease the width */
+  max-width: 150px; /* Limit maximum width */
+  margin-left: auto; /* Align towards the right */
+  background-color: #fff;
+  color: #000;
+  padding: 10 10px;
+  border-radius: 3px;
+}
+
+mat-select .mat-select-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+
+mat-option {
+  font-size: 15px;
+  color: #000;
+}
+
+.menu-button {
+  display: none;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 56px;
+  right: 20px;
+  background-color: #b74040;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  z-index: 1000;
+  width: 200px;
+}
+
+.dropdown-menu .button {
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+}
+
+.dropdown-menu .button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Media Query for Mobile View */
+@media (max-width: 600px) {
+  .spacer {
+    display: none;
+  }
+
+  .button-group {
+    display: none; /* Hide desktop buttons */
+  }
+
+  .menu-button {
+    display: block; /* Show the menu button */
+  }
+}
+
+/* -------------------------------- */
+.brand-link {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 24px;
+  letter-spacing: 1.5px;
+  margin-left: 10px;
+  transition: color 0.3s ease;
+}
+
+.brand-link:hover {
+  color: #090908;
+}
+
+.button {
+  font-weight: 500;
+  color: #fff;
+  transition: background-color 0.3s ease;
+  margin-right: 16px;
+  border-radius: 4px;
+  padding: 8px 16px;
+}
+
+.button:hover {
+  background-color: rgba(223, 96, 96, 0.1);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+mat-fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  padding: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+mat-fab mat-icon {
+  font-size: 24px;
+}
+
+.custom-fab {
+  background-color: #2f14c8;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  justify-content: center;
+  margin-right: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-fab:hover {
+  background-color: black;
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  mat-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .button {
+    margin: 4px 0;
+    width: 100%;
+  }
+
+  .custom-fab {
+    bottom: 80px;
+  }
+}

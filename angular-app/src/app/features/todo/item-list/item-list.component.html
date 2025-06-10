@@ -1,0 +1,72 @@
+<app-navbar [isAdmin]="isAdmin"></app-navbar>
+
+<div class="content">
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="search-container">
+    <mat-form-field appearance="outline">
+      <mat-label>{{'SEARCH'| translate}}</mat-label>
+      <input matInput [(ngModel)]="searchValue" (input)="applyFilter($event)" placeholder="Search by Name or Date of Birth">
+      <mat-icon matSuffix (click)="clearSearch()">clear</mat-icon>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <!-- <div class="table-controls">
+    <button mat-raised-button color="warn" class="custom-success"  (click)="deleteSelected()" *ngIf="isAdmin" [disabled]="selection.selected.length === 0">
+      Delete Selected
+    </button>
+
+    <button mat-raised-button color="primary" class="custom-success"  (click)="exportToExcel()" style="margin-left: auto;">
+      <mat-icon>file_download</mat-icon> Export
+    </button>
+  </div> -->
+
+  <div class="table-controls">
+    <button
+      mat-raised-button
+      color="warn"
+      class="custom-success"
+      (click)="deleteSelected()"
+      *ngIf="isAdmin"
+      [disabled]="selection.selected.length === 0"
+    >
+      {{'DELETE_SELECTED' | translate}}
+    </button>
+
+    <mat-menu #exportMenu="matMenu">
+      <button mat-menu-item (click)="exportToExcel()">
+        <mat-icon>file_download</mat-icon> {{'EXPORT_TO_EXCEL' | translate}}
+      </button>
+      <button mat-menu-item (click)="exportToPdf()">
+        <mat-icon>picture_as_pdf</mat-icon> {{'EXPORT_TO_PDF' | translate}}
+      </button>
+    </mat-menu>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="custom-success"
+      [matMenuTriggerFor]="exportMenu"
+      style="margin-left: auto;"
+    >
+      <mat-icon>file_download</mat-icon> {{'EXPORT' | translate}}
+    </button>
+  </div>
+
+  <app-custom-table
+  [displayedColumns]="displayedColumns"
+  [dataSource]="dataSource"
+  [selection]="selection"
+  [shouldLoadItems]="false"
+  [isLoading]="isLoading"
+  (toggleBookmark)="toggleBookmarked($event)"
+  (editItem)="onEdit($event)"
+  (deleteItem)="onDelete($event)"
+  >
+</app-custom-table>
+
+
+</div>

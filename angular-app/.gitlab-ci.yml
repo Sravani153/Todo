@@ -1,0 +1,88 @@
+stages:
+  - build
+  - build-image
+  - deploy
+
+variables:
+  IMAGE_NAME: "quay.io/openshift/origin-cli"
+  IMAGE_TAG: "latest"
+  NODE_VERSION: "18.19.1"
+  ANGULAR_CLI_VERSION: "18.0.0"
+  PACKAGE_MANAGER: "npm"
+
+before_script:
+  - echo "Installing curl with conflict resolution"
+  - microdnf install -y curl --allowerasing || yum install -y curl --allowerasing
+  - echo "Installing OpenShift CLI"
+  - curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz
+  - tar -xvf openshift-client-linux.tar.gz -C /usr/local/bin
+  - export PATH=$PATH:/usr/local/bin
+  - echo "Logging into OpenShift"
+  - oc login $OPENSHIFT_SERVER --token=$OPENSHIFT_TOKEN
+  - oc project $OPENSHIFT_PROJECT
+
+build:
+  stage: build
+  image: quay.io/openshift/origin-cli:latest
+  cache:
+    paths:
+      - node_modules/
+  script:
+    - echo "Installing Node.js and Angular CLI"
+    - curl -sL https://rpm.nodesource.com/setup_18.x | bash -
+    - dnf install -y nodejs
+    - npm install -g @angular/cli@${ANGULAR_CLI_VERSION}
+    - echo "Installing dependencies"
+    - npm install --legacy-peer-deps
+    - echo "Building the Angular project"
+    - ng build --configuration production --aot --optimization=true --source-map=false
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+
+build-image:
+  stage: build-image
+  image: quay.io/podman/stable
+  tags:
+    - podman
+  variables:
+    STORAGE_DRIVER: overlay
+    PODMAN_FORMAT: docker
+  script:
+    - set -x
+    - oc registry login
+    - echo "$DOCKER_PASSWORD" | podman login -u "$DOCKER_USER" --password-stdin
+    - sudo podman build -t "$IMAGE_NAME:$IMAGE_TAG" "$CI_PROJECT_DIR"
+    - sudo podman tag "$IMAGE_NAME:$IMAGE_TAG" "$IN_REGISTRY:$IMAGE_TAG"
+    - sudo podman --log-level=debug push "$IN_REGISTRY:$IMAGE_TAG"
+  dependencies:
+    - build
+
+deploy:
+  stage: deploy
+  image: quay.io/openshift/origin-cli:latest
+  script:
+    - |
+      if oc get deployment todo-front; then
+        # Update the image if the deployment already exists
+        oc set image deployment/todo-front todo-front=$IN_REGISTRY:$IMAGE_TAG
+        oc set resources deployment/todo-front --containers=todo-front --limits=cpu=100m,memory=512Mi
+        oc set resources deployment/todo-front --containers=todo-front --requests=cpu=10m,memory=10Mi
+        oc rollout status deployment/todo-front
+      else
+        # Create the deployment with the specified container and port
+        oc create deployment todo-front --image=$IN_REGISTRY:$IMAGE_TAG
+        oc set resources deployment/todo-front --containers=todo-front --limits=cpu=100m,memory=512Mi
+        oc set resources deployment/todo-front --containers=todo-front --requests=cpu=10m,memory=10Mi
+        oc set probe deployment/todo-front --containers=todo-front --readiness --get-url=http://:8080/ --initial-delay-seconds=5 --timeout-seconds=2
+        oc set probe deployment/todo-front --containers=todo-front --liveness --get-url=http://:8080/ --initial-delay-seconds=5 --timeout-seconds=2
+        # Expose the deployment as a service only if it doesn't exist
+        oc expose deployment todo-front --port=8080 --name=todo-front-svc
+      fi
+      # Create a route if one does not already exist
+      if ! oc get route todo-front; then
+        oc expose svc/todo-front-svc --name=todo-front --hostname=todo-todo.frontend.apps.cicd.arcus.soprasteria.com
+      fi
+  when: manual
+

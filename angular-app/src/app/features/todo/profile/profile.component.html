@@ -1,0 +1,34 @@
+<div class="profile-container" *ngIf="account$ | async as account">
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <mat-card-title>{{ 'USER_PROFILE' | translate }}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="profile-details">
+        <div class="profile-photo-container">
+          <!-- Profile Image -->
+          <img *ngIf="profilePhotoUrl$ | async as profilePhotoUrl" [src]="profilePhotoUrl" alt="Profile Photo" class="profile-photo" />
+
+          <!-- Profile Photo Actions -->
+          <div class="profile-photo-actions">
+            <!-- Delete button -->
+            <button *ngIf="this.profile?.fileId" mat-icon-button (click)="deleteProfilePhoto()">
+              <mat-icon>delete</mat-icon>
+            </button>
+
+            <!-- File input for upload -->
+            <input type="file" (change)="onFileSelected($event)" />
+            <button mat-button (click)="uploadProfilePhoto()">Upload Photo</button>
+          </div>
+        </div>
+
+        <div class="profile-info">
+          <p><strong class="label">{{ 'NAME:' | translate }}</strong> <span class="data">{{ account.name }}</span></p>
+          <p><strong class="label">{{ 'EMAIL:' | translate }}</strong> <span class="data">{{ account.email }}</span></p>
+          <p><strong class="label">{{ 'ROLE:' | translate }}</strong> <span class="data">{{ account.role }}</span></p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

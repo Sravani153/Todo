@@ -1,0 +1,53 @@
+<app-navbar [isAdmin]="isAdmin()"></app-navbar>
+
+<div class="audit-container">
+  <mat-card>
+    <mat-card-title>Audit Logs</mat-card-title>
+    <mat-table [dataSource]="auditLogs">
+
+      <!-- User ID Column -->
+      <ng-container matColumnDef="userId">
+        <mat-header-cell *matHeaderCellDef>User ID</mat-header-cell>
+        <mat-cell *matCellDef="let log">{{log.userId}}</mat-cell>
+      </ng-container>
+
+      <!-- Field Column -->
+      <ng-container matColumnDef="fieldName">
+        <mat-header-cell *matHeaderCellDef>FieldName</mat-header-cell>
+        <mat-cell *matCellDef="let log">{{log.fieldName}}</mat-cell>
+      </ng-container>
+
+      <!-- Old Value Column -->
+      <ng-container matColumnDef="oldValue">
+        <mat-header-cell *matHeaderCellDef>Old Value</mat-header-cell>
+        <mat-cell *matCellDef="let log">{{log.oldValue}}</mat-cell>
+      </ng-container>
+
+      <!-- New Value Column -->
+      <ng-container matColumnDef="newValue">
+        <mat-header-cell *matHeaderCellDef>New Value</mat-header-cell>
+        <mat-cell *matCellDef="let log">{{log.newValue}}</mat-cell>
+      </ng-container>
+
+      <!-- Updated By Column -->
+      <ng-container matColumnDef="updatedBy">
+        <mat-header-cell *matHeaderCellDef>Updated By</mat-header-cell>
+        <mat-cell *matCellDef="let log">{{log.updatedBy}}</mat-cell>
+      </ng-container>
+
+      <!-- Updated At Column -->
+      <ng-container matColumnDef="updatedAt">
+        <mat-header-cell *matHeaderCellDef>Updated At</mat-header-cell>
+        <mat-cell *matCellDef="let log">{{log.updatedAt | date:'yyyy-MM-dd HH:mm:ss'}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let log">{{log.action}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card>
+</div>

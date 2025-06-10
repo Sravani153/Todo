@@ -1,0 +1,37 @@
+<mat-toolbar color="primary">
+  <!-- Brand Link -->
+  <a mat-button class="brand-link" routerLink="/list">{{ 'TO_DO_APPLICATION' | translate }}</a>
+
+    <mat-select [(value)]="currentLanguage$" (selectionChange)="switchLanguage($event.value)">
+      <mat-option *ngFor="let lang of languages" [value]="lang.code">
+        {{ lang.name }}
+      </mat-option>
+    </mat-select>
+
+  <!-- Dynamic Buttons Based on Role -->
+  <button mat-button class="button" routerLink="/list">{{ 'ITEM_LIST' | translate }}</button>
+  <button mat-button class="button" *ngIf="isAdmin" routerLink="/accounts">{{ 'ALL_ACCOUNTS' | translate }}</button>
+  <button mat-button class="button" *ngIf="isAdmin" routerLink="/audit">{{ 'AUDIT_AND_LOGS' | translate }}</button>
+
+  <!-- Add Button for Admin -->
+  <button mat-fab class="custom-fab" *ngIf="isAdmin" routerLink="/add">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <!-- Bookmark Button -->
+  <button mat-button class="button" routerLink="/bookmark">{{ 'BOOKMARK' | translate }}</button>
+
+  <!-- Profile Icon with Menu Trigger -->
+<button mat-icon-button [matMenuTriggerFor]="profileMenu">
+  <img *ngIf="profilePhotoUrl$ | async as profilePhotoUrl" [src]="profilePhotoUrl" alt="Profile" class="navbar-profile-photo" />
+  <mat-icon *ngIf="!(profilePhotoUrl$ | async)">account_circle</mat-icon>
+</button>
+
+
+
+  <!-- Dropdown Profile Menu -->
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item routerLink="/profile">{{ 'PROFILE' | translate }}</button>
+    <button mat-menu-item (click)="signOut()">{{ 'LOGOUT' | translate }}</button>
+  </mat-menu>
+</mat-toolbar>

@@ -1,0 +1,24 @@
+<h2>Angular Directives</h2>
+
+<h3>ngFor</h3>
+<ul>
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul>
+
+<h3>ngIf</h3>
+<p *ngIf="showMessage">This is a conditional message.</p>
+<button (click)="toggleMessage()">Toggle Message</button>
+
+<h3>ngSwitch</h3>
+<div [ngSwitch]="color">
+  <p *ngSwitchCase="'red'">Red color selected</p>
+  <p *ngSwitchCase="'green'">Green color selected</p>
+  <p *ngSwitchDefault>Other color selected</p>
+</div>
+
+<h3>ngClass</h3>
+<p [ngClass]="{ 'red-text': isRed }">This text can be red.</p>
+<button (click)="toggleClass()">Toggle Class</button>
+
+<h3>ngStyle</h3>
+<p [ngStyle]="{ 'color': isRed ? 'red' : 'black' }">This text changes color based on a condition.</p>

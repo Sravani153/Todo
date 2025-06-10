@@ -1,0 +1,15 @@
+.audit-container {
+  padding: 20px;
+}
+
+mat-card {
+  margin: 10px 0;
+}
+
+mat-header-cell, mat-cell {
+  padding: 8px 16px;
+}
+
+mat-table {
+  width: 100%;
+}

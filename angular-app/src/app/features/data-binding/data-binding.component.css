@@ -1,0 +1,46 @@
+h2 {
+  color: #007bff;
+  text-align: center;
+}
+
+h3 {
+  color: #28a745;
+}
+
+p {
+  font-size: 16px;
+}
+
+input, button {
+  display: block;
+  margin: 10px 0;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+label {
+  display: block;
+  margin: 10px 0;
+}
+
+input[type="text"], input[type="number"], input[type="date"], input[type="password"] {
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="button"] {
+  margin-left: 10px;
+}

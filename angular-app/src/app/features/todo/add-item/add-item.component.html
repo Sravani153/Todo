@@ -1,0 +1,91 @@
+<app-navbar [isAdmin]="isAdmin"></app-navbar>
+
+<div class="content">
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div class="form-container">
+    <form [formGroup]="itemForm" (ngSubmit)="onSave()">
+
+      <div class="form-field">
+        <mat-form-field appearance="fill" class="wide-form-field">
+          <mat-label>{{ 'NAME' | translate }}</mat-label>
+          <input matInput formControlName="name" required>
+          <mat-error *ngIf="itemForm.get('name')?.hasError('required')">
+            {{ 'NAME_REQUIRED' | translate }}
+          </mat-error>
+          <mat-error *ngIf="itemForm.get('name')?.hasError('minlength')">
+            {{ 'NAME_MUST_BE_ATLEAST_THREE_CHAR' | translate }}
+          </mat-error>
+          <mat-error *ngIf="itemForm.get('name')?.hasError('maxlength')">
+            {{ 'NAME_SHOULD_NOT_EXCEED_CHAR' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <mat-form-field appearance="fill" class="wide-form-field">
+          <mat-label>{{ 'DOB' | translate }}</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dob" required>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="itemForm.get('dob')?.hasError('required')">
+            {{ 'DOB_REQUIRED' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field">
+        <label>{{ 'GENDER' | translate }}</label>
+        <mat-radio-group formControlName="gender" required>
+          <mat-radio-button value="Male">{{ 'MALE' | translate }}</mat-radio-button>
+          <mat-radio-button value="Female">{{ 'FEMALE' | translate }}</mat-radio-button>
+          <mat-radio-button value="Other">{{ 'OTHER' | translate }}</mat-radio-button>
+        </mat-radio-group>
+        <mat-error *ngIf="itemForm.get('gender')?.hasError('required')">
+        </mat-error>
+      </div>
+
+      <div class="form-field">
+        <mat-form-field appearance="fill" class="wide-form-field">
+          <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+          <input matInput formControlName="email" placeholder="{{ 'ENTER_EMAIL' | translate }}" type="email" required>
+          <mat-error *ngIf="itemForm.get('email')?.hasError('required') && itemForm.get('email')?.touched">
+            {{ 'EMAIL_REQUIRED' | translate }}
+          </mat-error>
+          <mat-error *ngIf="itemForm.get('email')?.hasError('email') && itemForm.get('email')?.touched">
+            {{ 'ENTER_VALID_ADDRESS' | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div formArrayName="phone">
+        <div *ngFor="let phone of phoneNumbers.controls; let i = index">
+          <div class="form-field">
+            <mat-form-field appearance="fill" class="wide-form-field">
+              <mat-label>{{ 'PHONENUMBER' | translate }} {{ i + 1 }}</mat-label>
+              <input matInput [formControlName]="i" placeholder="{{ 'ENTER_PHONENUMBER' | translate }}">
+              <button mat-icon-button matSuffix color="warn" (click)="removePhoneNumber(i)" type="button">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </div>
+        <button mat-raised-button color="primary" (click)="addPhoneNumber()" type="button">
+          {{ 'ADD_PHONENUMBER' | translate }}
+        </button>
+      </div>
+
+      <div class="button-group">
+        <button mat-raised-button [color]="itemForm.valid ? 'primary' : ''" type="submit" [disabled]="itemForm.invalid">
+          {{ 'SAVE' | translate }}
+        </button>
+        <button mat-raised-button color="warn" (click)="onCancel()" type="button">
+          {{ 'CANCEL' | translate }}
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
